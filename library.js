@@ -1,15 +1,24 @@
-// var webdriver = require ('selenium-webdriver'),
-//     By = webdriver.By,
-//     until = webdriver.until;
+const {Builder, By, until} = require('selenium-webdriver');
 
-const webdriver = require('selenium-webdriver');
-const chrome = require('selenium-webdriver/chrome');
-const chromedriver = require('chromedriver');
+let driver = new Builder()
+    .forBrowser('chrome')
+    .build();
 
-chrome.setDefaultService(new chrome.ServiceBuilder(chromedriver.path).build());
+driver.get('https://library-app.firebaseapp.com/');
+// driver.findElement(By.name('q')).sendKeys('webdriver');
+driver.findElement(By.css('input'));
+driver.findElement(By.css('.btn')).getText().then(function(txt){
+    console.log('Button text: ' + txt);
+});
+driver.findElements(By.css('nav li')).then(function(elements) {
+    elements.map(function (el) {
+        el.getText().then(function(txt){
+            console.log('li: ' + txt);
+        });
+    });
+});
+// driver.findElement(By.tagName('button')).click();
+// driver.wait(until.titleIs('webdriver - Google Search'), 1000);
 
-var driver = new webdriver.Builder().forBrowser('chrome').build();
-
-driver.get('http://google.com');
-driver.get('http://facebook.com');
-driver.quit();
+// driver.sleep(1000);
+//driver.quit();
